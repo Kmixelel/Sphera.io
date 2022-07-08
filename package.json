@@ -1,0 +1,22 @@
+{
+  "name": "strona",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "npx tailwindcss -i style.css -o ./dist/output.css --watch"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Kmixelel/bigdick69.tk.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Kmixelel/bigdick69.tk/issues"
+  },
+  "homepage": "https://github.com/Kmixelel/bigdick69.tk#readme",
+  "devDependencies": {
+    "tailwindcss": "^3.1.5"
+  }
+}
