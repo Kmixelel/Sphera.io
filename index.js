@@ -1,18 +1,20 @@
-var audio_gameStart = new Audio('assets/gamestart.mp3');
-var audio_gameOver = new Audio('assets/gameover.mp3');
-var audio_hit = new Audio('assets/hit.mp3');
-var audio_shoot = new Audio('assets/shoot.mp3');
-const canvas = document.
-querySelector('canvas')
-const c = canvas.getContext('2d')
-canvas.width = innerWidth
-canvas.height = innerHeight
+const audio_gameStart = new Audio('assets/gamestart.mp3');
+const audio_gameOver = new Audio('assets/gameover.mp3');
+const audio_hit = new Audio('assets/hit.mp3');
+const audio_shoot = new Audio('assets/shoot.mp3');
 
+const canvas = document.querySelector('canvas');
+const c = canvas.getContext('2d');
+const scoreContainerEl = document.querySelector('#scoreContainerEl');
 const scoreEl = document.querySelector('#scoreEl');
 const startGameBtn = document.querySelector('#startGameBtn');
 const modalEl = document.querySelector('#modalEl');
 const bigScoreEl = document.querySelector('#bigScoreEl');
 
+canvas.width = innerWidth;
+canvas.height = innerHeight;
+
+let flag_gameActive = false;
 class Player {
     constructor(x, y, radius, color) {
         this.x = x;
@@ -109,6 +111,8 @@ let enemies = [];
 let particles = [];
 
 function init() {
+    flag_gameActive = true;
+    scoreContainerEl.classList.remove("hidden");
     player = new Player(x, y, 10, 'white');
     projectiles = [];
     enemies = [];
@@ -183,12 +187,12 @@ function animate() {
         const dist = Math.hypot(player.x - enemy.x, player.y - enemy.y);
         if (dist - enemy.radius - player.radius < 1) {
             audio_gameOver.play();
+            flag_gameActive = false;
+            scoreContainerEl.classList.add("hidden");
             cancelAnimationFrame(animationId);
             modalEl.style.display = 'flex';
             bigScoreEl.innerHTML = score;
         }
-
-
 
         projectiles.forEach((projectile, projectileIndex) => {
             const dist = Math.hypot(projectile.x - enemy.x, projectile.y - enemy.y);
@@ -236,7 +240,9 @@ function animate() {
 }
 
 addEventListener('click', (event) => {
-    audio_shoot.cloneNode(true).play();
+    if (flag_gameActive) {
+        audio_shoot.cloneNode(true).play();
+    }
     const angle = Math.atan2(
         event.clientY - canvas.height / 2,
         event.clientX - canvas.width / 2);
