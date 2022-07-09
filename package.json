@@ -18,5 +18,9 @@
   "homepage": "https://github.com/Kmixelel/bigdick69.tk#readme",
   "devDependencies": {
     "tailwindcss": "^3.1.5"
+  },
+  "dependencies": {
+    "faunadb": "^4.6.0",
+    "netlify-identity-widget": "^1.9.2"
   }
 }

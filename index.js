@@ -7,14 +7,23 @@ const canvas = document.querySelector('canvas');
 const c = canvas.getContext('2d');
 const scoreContainerEl = document.querySelector('#scoreContainerEl');
 const scoreEl = document.querySelector('#scoreEl');
+const highScoreEl = document.querySelector('#highScoreEl');
 const startGameBtn = document.querySelector('#startGameBtn');
 const modalEl = document.querySelector('#modalEl');
 const bigScoreEl = document.querySelector('#bigScoreEl');
+const bigHighScoreEl = document.querySelector('#bigHighScoreEl');
 
 canvas.width = innerWidth;
 canvas.height = innerHeight;
 
 let flag_gameActive = false;
+
+if (localStorage.getItem('highscore')) {
+    bigHighScoreEl.innerHTML = localStorage.getItem('highscore');
+} else {
+    localStorage.setItem('highscore', 0);
+}
+
 class Player {
     constructor(x, y, radius, color) {
         this.x = x;
@@ -112,6 +121,7 @@ let particles = [];
 
 function init() {
     flag_gameActive = true;
+    highScoreEl.innerHTML = localStorage.getItem('highscore');
     scoreContainerEl.classList.remove("hidden");
     player = new Player(x, y, 10, 'white');
     projectiles = [];
@@ -190,8 +200,12 @@ function animate() {
             flag_gameActive = false;
             scoreContainerEl.classList.add("hidden");
             cancelAnimationFrame(animationId);
-            modalEl.style.display = 'flex';
             bigScoreEl.innerHTML = score;
+            if (score > localStorage.getItem('highscore')) {
+                localStorage.setItem('highscore', score);
+                bigHighScoreEl.innerHTML = score;
+            }
+            modalEl.style.display = 'flex';
         }
 
         projectiles.forEach((projectile, projectileIndex) => {
